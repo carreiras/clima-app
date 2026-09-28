@@ -14,7 +14,6 @@ import com.example.climaapp.domain.model.City
 object NotificationHelper {
 
     const val CHANNEL_ID = "weather_alerts"
-    const val THRESHOLD_CELSIUS = 30.0 // valor fixo — simplificação didática, sem tela de configurações
 
     fun createChannel(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -28,8 +27,8 @@ object NotificationHelper {
         }
     }
 
-    fun notifyIfThresholdCrossed(context: Context, city: City, temperature: Double) {
-        if (temperature < THRESHOLD_CELSIUS) return
+    fun notifyIfThresholdCrossed(context: Context, city: City, temperature: Double, thresholdCelsius: Float) {
+        if (temperature < thresholdCelsius) return
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val granted = ActivityCompat.checkSelfPermission(

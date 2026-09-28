@@ -30,7 +30,8 @@ fun SearchScreen(
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel(),
     onCityClick: (City) -> Unit = {},
-    onNavigateToFavorites: () -> Unit = {}
+    onNavigateToFavorites: () -> Unit = {},
+    onNavigateToSettings: () -> Unit = {}
 ) {
     var query by remember { mutableStateOf("") }
     val uiState by viewModel.uiState.collectAsState()
@@ -40,6 +41,9 @@ fun SearchScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
         ) {
+            TextButton(onClick = onNavigateToSettings) {
+                Text("Configurações")
+            }
             TextButton(onClick = onNavigateToFavorites) {
                 Text("Favoritos")
             }

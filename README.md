@@ -21,6 +21,7 @@ Compose, Coroutines/Flow, WorkManager.
 8. [Favoritos offline-first](docs/aula-08-favoritos-offline.md)
 9. [WorkManager — sync em background](docs/aula-09-workmanager.md)
 10. [Notificações locais](docs/aula-10-notificacoes.md)
+11. [Tela de configurações (intervalo e limiar)](docs/aula-11-configuracoes.md)
 
 ## Documentação de apoio
 
