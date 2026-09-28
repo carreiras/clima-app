@@ -73,7 +73,7 @@ override suspend fun toggleFavorite(city: City): Boolean {
         false
     } else {
         cityDao.upsert(
-            CityEntity(city.id, city.name, city.country, city.latitude, city.longitude, lastTemperature = null)
+            CityEntity(city.id, city.name, city.country, city.latitude, city.longitude, city.lastTemperature)
         )
         true
     }
@@ -106,9 +106,30 @@ Busca pra resolver isso. Voltar de Detalhes ou Favoritos pra Busca já
 funciona sozinho, através do botão de voltar do sistema — o Navigation
 Compose cuida disso automaticamente.
 
+## Um bug encontrado depois: favoritar salvava temperatura vazia
+
+Testando esta aula junto com a Aula 9 (que passou a exibir a
+temperatura na tela de Favoritos), apareceu um problema: favoritar uma
+cidade recém-buscada salvava `lastTemperature = null` — mesmo a tela de
+Detalhes já tendo acabado de mostrar a temperatura atual. O motivo:
+`toggleFavorite` sempre criava a `CityEntity` com `lastTemperature =
+null` "na mão", ignorando que a `DetailsScreen` já tinha esse dado em
+memória (no `uiState`) no exato momento em que o usuário tocava em
+"Favoritar".
+
+A correção: o `DetailsViewModel.toggleFavorite()` passa a ler a
+temperatura atual do `uiState` (se já tiver carregado) e leva ela junto
+no `City` que envia pro Repository — que agora usa
+`city.lastTemperature` em vez de forçar `null`. Assim, favoritar uma
+cidade já salva o dado que a tela já tinha, sem precisar esperar o
+próximo sync em background (Aula 9) ou uma nova visita à tela de
+Detalhes.
+
 ## Critério de aceite
 
 Testado no dispositivo físico: favoritar São Paulo, ativar modo avião,
 e a tela de Favoritos continua mostrando a cidade normalmente — a rede
 foi desligada, mas o app não perdeu nenhuma informação, porque nunca
-dependeu da rede pra mostrar o que já sabia.
+dependeu da rede pra mostrar o que já sabia. Também testado: favoritar
+uma cidade já mostra a temperatura na lista de Favoritos imediatamente,
+sem esperar nenhum sync.

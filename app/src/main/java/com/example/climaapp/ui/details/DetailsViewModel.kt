@@ -54,6 +54,9 @@ class DetailsViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), false)
 
     fun toggleFavorite() {
-        viewModelScope.launch { repository.toggleFavorite(city) }
+        val currentTemperature = (uiState.value as? DetailsUiState.Success)?.forecast?.currentTemperature
+        viewModelScope.launch {
+            repository.toggleFavorite(city.copy(lastTemperature = currentTemperature))
+        }
     }
 }

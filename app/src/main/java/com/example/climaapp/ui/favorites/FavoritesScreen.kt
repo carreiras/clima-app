@@ -22,7 +22,13 @@ fun FavoritesScreen(modifier: Modifier = Modifier, viewModel: FavoritesViewModel
     } else {
         LazyColumn(modifier = modifier.fillMaxSize()) {
             items(favorites) { city ->
-                ListItem(headlineContent = { Text(text = "${city.name}, ${city.country}") })
+                ListItem(
+                    headlineContent = { Text(text = "${city.name}, ${city.country}") },
+                    supportingContent = {
+                        val temperatureText = city.lastTemperature?.let { "$it°C" } ?: "Ainda sem dado salvo"
+                        Text(text = temperatureText)
+                    }
+                )
             }
         }
     }
