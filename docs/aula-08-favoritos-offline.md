@@ -97,6 +97,39 @@ cidades favoritas guardada no Room. É exatamente por isso que a tela de
 Favoritos funciona sem internet: ela nunca dependeu da internet pra
 existir, só pra ficar atualizada.
 
+### O botão de favoritar, na tela de Detalhes
+
+```kotlin
+val isFavorite: StateFlow<Boolean> = repository.isFavorite(city.id)
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), false)
+
+fun toggleFavorite() {
+    val currentTemperature = (uiState.value as? DetailsUiState.Success)?.forecast?.currentTemperature
+    viewModelScope.launch {
+        repository.toggleFavorite(city.copy(lastTemperature = currentTemperature))
+    }
+}
+```
+
+`isFavorite` funciona parecido com a lista de Favoritos: observa o Room
+direto (via `repository.isFavorite(city.id)`), então se o usuário
+favoritar essa cidade em qualquer lugar do app, esse valor atualiza
+sozinho, sem precisar recarregar a tela. `toggleFavorite()` é chamado
+quando o usuário toca no botão — repare que ele lê a temperatura atual
+do próprio `uiState` da tela (`currentTemperature`) antes de mandar pro
+Repository; isso é relevante pra um bug explicado mais abaixo.
+
+Na tela, o botão só precisa observar `isFavorite` pra decidir o próprio
+texto:
+
+```kotlin
+val isFavorite by viewModel.isFavorite.collectAsState()
+// ...
+Button(onClick = { viewModel.toggleFavorite() }) {
+    Text(text = if (isFavorite) "Remover dos favoritos" else "Favoritar")
+}
+```
+
 ## Um ajuste que não estava no plano original: navegar até os Favoritos
 
 Ao testar esta aula, percebemos que não existia nenhum jeito de chegar

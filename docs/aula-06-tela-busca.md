@@ -59,6 +59,36 @@ país antes de montar a rota (e decodificamos de volta do outro lado,
 na tela de Detalhes) — uma técnica padrão sempre que texto livre precisa
 viajar dentro de uma URL.
 
+### Avisando o NavHost do tipo de cada pedaço de dado
+
+```kotlin
+composable(
+    route = Screen.Details.route,
+    arguments = listOf(
+        navArgument("cityId") { type = NavType.LongType },
+        navArgument("name") { type = NavType.StringType },
+        navArgument("country") { type = NavType.StringType },
+        navArgument("lat") { type = NavType.FloatType },
+        navArgument("lon") { type = NavType.FloatType }
+    )
+) {
+    DetailsScreen()
+}
+```
+
+Isso é o elo que falta entre a rota (que é só texto, tipo
+`details/3448439/São Paulo/Brazil/-23.5/-46.6`) e o `DetailsViewModel`
+conseguir ler `cityId` como `Long` e não como `String`. Cada
+`navArgument` diz ao Navigation Compose "esse pedaço da rota, entre
+essas duas barras, deve ser interpretado como este tipo" — é esse
+parsing que deixa os valores já prontos, com o tipo certo, dentro do
+`SavedStateHandle` que a tela de Detalhes vai ler a seguir.
+
+> `lat`/`lon` usam `NavType.FloatType`, não `DoubleType` — o Navigation
+> Compose não tem um tipo embutido para `Double`. Por isso o
+> `DetailsViewModel` converte de volta pra `Double` (`.toDouble()`) ao
+> reconstruir o `City`, logo abaixo.
+
 ### A tela de Detalhes lendo esses dados assim que abre
 
 ```kotlin

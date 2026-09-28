@@ -55,6 +55,76 @@ vida na Aula 5, quando ligarmos ela a um `ViewModel`.
 
 ## Passo a passo
 
+### Os dois formatos, lado a lado
+
+Domain models — o formato "limpo" que o resto do app vai usar:
+
+```kotlin
+data class City(
+    val id: Long,
+    val name: String,
+    val country: String,
+    val latitude: Double,
+    val longitude: Double
+)
+
+data class WeatherForecast(
+    val currentTemperature: Double,
+    val weatherCode: Int,
+    val dailyMaxTemperatures: List<Double>,
+    val dailyMinTemperatures: List<Double>
+)
+```
+
+DTOs — o formato cru, espelhando exatamente o JSON da API:
+
+```kotlin
+data class GeocodingResponseDto(
+    val results: List<GeocodingResultDto>?
+)
+
+data class GeocodingResultDto(
+    val id: Long,
+    val name: String,
+    val country: String,
+    val latitude: Double,
+    val longitude: Double
+)
+
+data class ForecastResponseDto(
+    val current: CurrentDto,
+    val daily: DailyDto
+)
+
+data class CurrentDto(
+    @SerializedName("temperature_2m") val temperature: Double,
+    @SerializedName("weather_code") val weatherCode: Int
+)
+
+data class DailyDto(
+    @SerializedName("temperature_2m_max") val maxTemperatures: List<Double>,
+    @SerializedName("temperature_2m_min") val minTemperatures: List<Double>
+)
+```
+
+Repare que `CurrentDto` e `DailyDto` têm uma anotação em cada campo,
+`@SerializedName("...")`. Isso resolve um problema específico: o campo no
+JSON se chama `temperature_2m` (com número e underscore no meio — não é
+um nome válido de variável Kotlin do nosso padrão), mas dentro do app
+queremos chamar essa propriedade de `temperature`, num estilo mais
+limpo. A anotação diz ao Gson (a biblioteca que faz esse parsing):
+"quando vir a chave `temperature_2m` no JSON, guarda o valor aqui, numa
+propriedade chamada `temperature`". Sem ela, o Gson tentaria casar o
+nome do campo do JSON com o nome da propriedade Kotlin exatamente
+como estão escritos, e `temperature` não bateria com `temperature_2m`
+— o valor simplesmente viria como `null` (ou zero), sem nenhum aviso.
+
+`GeocodingResponseDto`/`GeocodingResultDto`, por outro lado, não
+precisam de `@SerializedName` — os nomes dos campos no JSON dessa API
+(`id`, `name`, `country`, `latitude`, `longitude`) já batem exatamente
+com os nomes que demos às propriedades Kotlin, então o Gson consegue
+casar os dois automaticamente.
+
 ### Buscando dados pela internet
 
 ```kotlin

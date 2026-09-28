@@ -105,7 +105,30 @@ abstract class AppDatabase : RoomDatabase() {
 Essa classe representa o banco como um todo — que tabelas ele tem
 (`entities`), e como chegar até elas (`cityDao()`). É essa classe que o
 `DatabaseModule` do Hilt vai usar pra criar o banco de verdade, uma
-única vez pro app inteiro, e entregar pra quem precisar dele.
+única vez pro app inteiro, e entregar pra quem precisar dele:
+
+```kotlin
+@Provides
+@Singleton
+fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase =
+    Room.databaseBuilder(context, AppDatabase::class.java, "clima-app.db").build()
+
+@Provides
+@Singleton
+fun provideCityDao(database: AppDatabase): CityDao = database.cityDao()
+```
+
+> **`Room.databaseBuilder(context, AppDatabase::class.java, "clima-app.db")`**
+> → monta o banco de verdade a partir da classe `AppDatabase`, salvando
+> num arquivo chamado `clima-app.db` dentro do armazenamento privado do
+> app (o mesmo padrão builder do `Retrofit.Builder()` da Aula 1 —
+> configura peça por peça, e `.build()` finaliza).
+>
+> O segundo `@Provides` (`provideCityDao`) existe porque, embora o
+> `AppDatabase` já saiba entregar o DAO (`database.cityDao()`), quem for
+> pedir ao Hilt só um `CityDao` (como o `WeatherRepositoryImpl` vai
+> fazer, na Aula 8) não precisa saber que ele vem de dentro de um banco —
+> só precisa pedir `CityDao` no construtor, e o Hilt resolve o resto.
 
 ## Critério de aceite
 

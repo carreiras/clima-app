@@ -1,12 +1,13 @@
-# Aula 10 — Notificações locais (última aula!)
+# Aula 10 — Notificações locais (última aula do plano original)
 
 ## Objetivo
 
-Chegamos na última peça do app: avisar o usuário quando uma cidade
-favorita está com a temperatura acima de um certo valor — mesmo que ele
-não esteja com o app aberto no momento. Isso conecta com o trabalho da
-Aula 9: o `SyncWorker` já atualiza os dados em segundo plano; agora ele
-também vai decidir se vale a pena avisar alguém sobre isso.
+Chegamos na última peça do plano original de 10 aulas: avisar o usuário
+quando uma cidade favorita está com a temperatura acima de um certo
+valor — mesmo que ele não esteja com o app aberto no momento. Isso
+conecta com o trabalho da Aula 9: o `SyncWorker` já atualiza os dados em
+segundo plano; agora ele também vai decidir se vale a pena avisar
+alguém sobre isso.
 
 ## O problema: notificação tem duas permissões diferentes, em momentos diferentes
 
@@ -138,12 +139,17 @@ aparecer de verdade na barra de notificações do tablet — confirmado
 tanto pelo log do sistema (`NotificationManager: ... notify(...)`)
 quanto visualmente, com a barra de notificações expandida.
 
-## Fim das 10 aulas
+## Fim do plano original de 10 aulas
 
-Com isso, o app de clima está completo: busca de cidades, previsão
-detalhada, favoritos com cache offline-first, sincronização periódica
-em background, e notificações locais — construído aula a aula, com
-arquitetura em camadas e injeção de dependência via Hilt desde o
-início. Os bugs reais encontrados pelo caminho (e documentados em cada
-aula) fazem parte do processo tanto quanto o código que funcionou de
-primeira.
+Com isso, o plano original de 10 aulas está completo: busca de cidades,
+previsão detalhada, favoritos com cache offline-first, sincronização
+periódica em background, e notificações locais — construído aula a
+aula, com arquitetura em camadas e injeção de dependência via Hilt
+desde o início. Os bugs reais encontrados pelo caminho (e documentados
+em cada aula) fazem parte do processo tanto quanto o código que
+funcionou de primeira.
+
+Uma [Aula 11](aula-11-configuracoes.md) foi adicionada depois, como
+extensão — uma tela de configurações pra tornar ajustável o que essa
+aula deixou fixo em código (o intervalo do `SyncWorker` e o limiar de
+notificação).
