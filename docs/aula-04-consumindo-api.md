@@ -71,7 +71,45 @@ quem lê essa descrição e realmente faz a chamada de rede é o Retrofit,
 configurado na próxima seção.
 
 O mesmo padrão se repete pra buscar a previsão do tempo de uma cidade
-específica, dado sua latitude e longitude.
+específica, dado sua latitude e longitude:
+
+```kotlin
+interface ForecastApiService {
+    @GET("v1/forecast")
+    suspend fun getForecast(
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude: Double,
+        @Query("current") current: String = "temperature_2m,weather_code",
+        @Query("daily") daily: String = "temperature_2m_max,temperature_2m_min",
+        @Query("timezone") timezone: String = "auto"
+    ): ForecastResponseDto
+}
+```
+
+Repare que três desses parâmetros já vêm com um valor padrão, em vez de
+precisar ser informado toda vez que chamarmos essa função. Isso não é só
+conveniência — cada um desses valores está dizendo à API, em linguagem
+dela, exatamente o que queremos de volta:
+
+- `current = "temperature_2m,weather_code"` pede a temperatura **agora**
+  e um código representando a condição do tempo agora (sol, chuva,
+  nublado...).
+- `daily = "temperature_2m_max,temperature_2m_min"` pede a temperatura
+  máxima e mínima **do dia**.
+- `timezone = "auto"` diz pra API descobrir sozinha o fuso horário do
+  lugar, a partir da latitude/longitude — importante pra ela saber onde
+  um "dia" começa e termina, o que afeta o cálculo de máxima/mínima.
+
+Cada um desses parâmetros aceita uma lista de valores separados por
+vírgula (é por isso que `current` e `daily` são uma única string com
+vírgula no meio, não uma lista Kotlin de verdade — é assim que a API
+espera receber esse tipo de parâmetro numa URL). Neste projeto sempre
+pedimos a mesma coisa, por isso faz sentido esses três já virem com um
+valor padrão, em vez de o chamador ter que repetir isso toda vez.
+
+> Guia de referência com todos os parâmetros e campos dessa API (inclusive
+> os que este projeto não usa, e a tabela de códigos de clima):
+> [`docs/open-meteo-api-referencia.md`](open-meteo-api-referencia.md).
 
 ### Configurando o cliente HTTP
 

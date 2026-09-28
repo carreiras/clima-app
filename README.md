@@ -24,6 +24,7 @@ Compose, Coroutines/Flow, WorkManager.
 
 ## Documentação de apoio
 
+- [Referência dos parâmetros da API Open-Meteo](docs/open-meteo-api-referencia.md)
 - [Configuração de depuração sem fio (Wireless Debugging)](docs/wireless-debugging-setup.md)
 - [Roadmap original (referência histórica)](docs/roadmap-app-clima-kotlin.md)
 - [Spec técnica do projeto](docs/superpowers/specs/2026-09-28-clima-app-design.md)

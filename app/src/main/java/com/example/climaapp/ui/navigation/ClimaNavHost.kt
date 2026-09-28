@@ -4,9 +4,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.climaapp.ui.details.DetailsScreen
 import com.example.climaapp.ui.favorites.FavoritesScreen
 import com.example.climaapp.ui.search.SearchScreen
@@ -19,8 +21,33 @@ fun ClimaNavHost(innerPadding: PaddingValues) {
         startDestination = Screen.Search.route,
         modifier = Modifier.padding(innerPadding)
     ) {
-        composable(Screen.Search.route) { SearchScreen() }
+        composable(Screen.Search.route) {
+            SearchScreen(
+                onCityClick = { city ->
+                    navController.navigate(
+                        Screen.Details.createRoute(
+                            cityId = city.id,
+                            name = city.name,
+                            country = city.country,
+                            lat = city.latitude,
+                            lon = city.longitude
+                        )
+                    )
+                }
+            )
+        }
         composable(Screen.Favorites.route) { FavoritesScreen() }
-        composable(Screen.Details.route) { DetailsScreen() }
+        composable(
+            route = Screen.Details.route,
+            arguments = listOf(
+                navArgument("cityId") { type = NavType.LongType },
+                navArgument("name") { type = NavType.StringType },
+                navArgument("country") { type = NavType.StringType },
+                navArgument("lat") { type = NavType.FloatType },
+                navArgument("lon") { type = NavType.FloatType }
+            )
+        ) {
+            DetailsScreen()
+        }
     }
 }
