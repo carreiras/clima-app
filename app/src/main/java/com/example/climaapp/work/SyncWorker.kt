@@ -8,6 +8,7 @@ import com.example.climaapp.domain.repository.WeatherRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.last
 
 @HiltWorker
 class SyncWorker @AssistedInject constructor(
@@ -19,7 +20,10 @@ class SyncWorker @AssistedInject constructor(
     override suspend fun doWork(): Result {
         val favorites = repository.getFavorites().first()
         favorites.forEach { city ->
-            repository.getForecast(city).first()
+            val result = repository.getForecast(city).last()
+            result.getOrNull()?.let { forecast ->
+                NotificationHelper.notifyIfThresholdCrossed(applicationContext, city, forecast.currentTemperature)
+            }
         }
         return Result.success()
     }

@@ -7,7 +7,7 @@ data class GeocodingResponseDto(
 data class GeocodingResultDto(
     val id: Long,
     val name: String,
-    val country: String,
+    val country: String?,
     val latitude: Double,
     val longitude: Double
 )
