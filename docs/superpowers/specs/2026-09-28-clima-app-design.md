@@ -126,10 +126,37 @@ val retrofit = Retrofit.Builder()
 > **`.build()`** → finaliza a construção e devolve o `Retrofit` pronto pra uso.
 ````
 
-Regra: só quebrar bloco a bloco sintaxe nova/não-trivial (builders,
-anotações, DSLs do Compose/Room/Hilt). Código repetitivo (ex: segunda
-função `@Composable` simples parecida com a primeira) não precisa da
-quebra completa de novo.
+**Quando usar a quebra bloco a bloco (regra revisada em 2026-09-28):**
+só para sintaxe encadeada genuinamente nova/complexa — builders (como o
+exemplo do `Retrofit.Builder()` acima) e DSLs (o corpo de um `NavHost {
+}`, por exemplo). **Não usar esse formato para anotações simples**
+(`@HiltAndroidApp`, `@AndroidEntryPoint`, `@Module`, `@Composable`,
+`@Inject` etc.) — nada de blockquote dissecando cada `@Anotacao`
+separadamente. Anotações são explicadas em prosa corrida, como parte da
+explicação conceitual do arquivo/classe (ver abaixo), não como sintaxe a
+ser decodificada símbolo por símbolo.
+
+**Tom didático (público: alunos).** Cada aula deve:
+
+- Abrir com uma analogia ou situação concreta antes de qualquer sintaxe
+  — explicar o **problema** que a ferramenta/padrão resolve antes de
+  mostrar **como** ela resolve.
+- Explicar o papel de cada classe/arquivo em linguagem corrida e
+  conceitual — o que ele faz e por que existe — sem depender de listar
+  cada anotação com sua explicação técnica isolada.
+- Definir todo termo técnico na primeira vez que aparece (não assumir que
+  "injeção de dependência", "processador de anotações" etc. já são
+  conhecidos), mesmo que isso já tenha sido explicado numa aula anterior
+  — um lembrete curto já basta na 2ª aparição.
+- Preferir frases curtas e parágrafos curtos a blocos longos de texto.
+- Fechar o "Critério de aceite" relembrando, em uma frase, o que aquele
+  resultado prova (não só "compila", mas "compila, e isso confirma que
+  X").
+
+Esse padrão vale para todos os `docs/aula-XX-*.md`, retroativo às aulas
+já escritas (1 e 2 foram revisadas nesse tom em 2026-09-28, primeiro
+para um tom mais didático geral, depois revisadas de novo no mesmo dia
+para remover a dissecação de anotações linha a linha).
 
 ## Organização de arquivos
 
