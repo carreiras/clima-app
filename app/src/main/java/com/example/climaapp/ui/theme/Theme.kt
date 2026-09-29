@@ -12,32 +12,55 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = DuskBlueLight,
+    onPrimary = NavyInk,
+    primaryContainer = DuskBlueContainerDark,
+    onPrimaryContainer = DuskBlueLight,
+    secondary = SunsetCoralLight,
+    onSecondary = NavyInk,
+    secondaryContainer = CoralContainerDark,
+    onSecondaryContainer = SunsetCoralLight,
+    tertiary = SunsetCoralLight,
+    onTertiary = NavyInk,
+    background = NavyInk,
+    onBackground = NavyInkLight,
+    surface = NavySurfaceDark,
+    onSurface = NavyInkLight,
+    surfaceVariant = NavySurfaceVariantDark,
+    onSurfaceVariant = MutedMist,
+    outline = SlateOutlineDark,
+    error = ErrorRedLight,
+    onError = NavyInk
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary = DuskBlue,
+    onPrimary = SkyMist,
+    primaryContainer = DuskBluePale,
+    onPrimaryContainer = DuskBlue,
+    secondary = SunsetCoral,
+    onSecondary = SkyMist,
+    secondaryContainer = CoralPale,
+    onSecondaryContainer = SunsetCoral,
+    tertiary = SunsetCoral,
+    onTertiary = SkyMist,
+    background = SkyMist,
+    onBackground = NavyInk,
+    surface = SkySurface,
+    onSurface = NavyInk,
+    surfaceVariant = SkySurfaceVariant,
+    onSurfaceVariant = MutedNavy,
+    outline = SlateOutline,
+    error = ErrorRed,
+    onError = SkyMist
 )
 
 @Composable
 fun ClimaAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    // Desligado por padrão: preferimos a paleta "entardecer" do app à cor
+    // extraída do papel de parede do usuário (Material You).
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

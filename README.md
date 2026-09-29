@@ -22,6 +22,7 @@ Compose, Coroutines/Flow, WorkManager.
 9. [WorkManager — sync em background](docs/aula-09-workmanager.md)
 10. [Notificações locais](docs/aula-10-notificacoes.md)
 11. [Tela de configurações (intervalo e limiar)](docs/aula-11-configuracoes.md)
+12. [Menu, tipografia e tema visual](docs/aula-12-redesign-visual.md)
 
 ## Documentação de apoio
 
