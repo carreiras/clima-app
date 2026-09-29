@@ -10,5 +10,6 @@ data class CityEntity(
     val country: String,
     val latitude: Double,
     val longitude: Double,
-    val lastTemperature: Double?
+    val lastTemperature: Double?,
+    val region: String?
 )

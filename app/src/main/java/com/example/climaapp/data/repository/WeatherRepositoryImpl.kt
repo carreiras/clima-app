@@ -52,7 +52,7 @@ class WeatherRepositoryImpl @Inject constructor(
     }
 
     override fun getFavorites(): Flow<List<City>> = cityDao.getAll().map { entities ->
-        entities.map { City(it.id, it.name, it.country, it.latitude, it.longitude, it.lastTemperature) }
+        entities.map { City(it.id, it.name, it.country, it.latitude, it.longitude, it.lastTemperature, it.region) }
     }
 
     override suspend fun toggleFavorite(city: City): Boolean {
@@ -62,7 +62,7 @@ class WeatherRepositoryImpl @Inject constructor(
             false
         } else {
             cityDao.upsert(
-                CityEntity(city.id, city.name, city.country, city.latitude, city.longitude, city.lastTemperature)
+                CityEntity(city.id, city.name, city.country, city.latitude, city.longitude, city.lastTemperature, city.region)
             )
             true
         }

@@ -27,11 +27,15 @@ do que usamos — este projeto só aproveita estes:
 | `name` | Nome da cidade. |
 | `country` | Nome do país. |
 | `latitude`, `longitude` | Coordenadas geográficas — é isso que a Forecast API vai usar pra saber de qual lugar buscar o clima. |
+| `admin1` | A divisão administrativa de maior nível dentro do país — no Brasil, o estado (ex: "São Paulo"). |
+| `admin2` | A divisão de nível seguinte — no Brasil, geralmente o município (ex: "Campos do Jordão"). |
+| `admin3` | Uma divisão ainda mais específica, quando existe — bairro ou distrito dentro do município (ex: "Santo Amaro", dentro de São Paulo). Nem todo resultado tem esse campo. |
 
-A API também devolve `country_code`, `population`, `timezone`,
-`admin1`...`admin4` (região/estado) e outros campos que este projeto
-ignora por simplicidade (nosso `GeocodingResultDto`, na Aula 4, só lê os
-cinco campos da tabela acima).
+A API também devolve `country_code`, `population`, `timezone`, `admin4`
+e outros campos que este projeto ignora por simplicidade (nosso
+`GeocodingResultDto` só lê os campos da tabela acima — `admin1` a
+`admin3` foram adicionados na [Aula 13](aula-13-desambiguacao-busca.md)
+pra diferenciar lugares com nome igual).
 
 ## Forecast API — buscar a previsão de um lugar
 

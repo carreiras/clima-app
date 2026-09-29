@@ -6,5 +6,6 @@ data class City(
     val country: String,
     val latitude: Double,
     val longitude: Double,
-    val lastTemperature: Double? = null
+    val lastTemperature: Double? = null,
+    val region: String? = null
 )

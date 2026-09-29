@@ -92,7 +92,8 @@ fun ClimaNavHost() {
                                 name = city.name,
                                 country = city.country,
                                 lat = city.latitude,
-                                lon = city.longitude
+                                lon = city.longitude,
+                                region = city.region
                             )
                         )
                     }
@@ -107,7 +108,8 @@ fun ClimaNavHost() {
                                 name = city.name,
                                 country = city.country,
                                 lat = city.latitude,
-                                lon = city.longitude
+                                lon = city.longitude,
+                                region = city.region
                             )
                         )
                     }
@@ -121,7 +123,8 @@ fun ClimaNavHost() {
                     navArgument("name") { type = NavType.StringType },
                     navArgument("country") { type = NavType.StringType },
                     navArgument("lat") { type = NavType.FloatType },
-                    navArgument("lon") { type = NavType.FloatType }
+                    navArgument("lon") { type = NavType.FloatType },
+                    navArgument("region") { type = NavType.StringType }
                 )
             ) {
                 DetailsScreen()

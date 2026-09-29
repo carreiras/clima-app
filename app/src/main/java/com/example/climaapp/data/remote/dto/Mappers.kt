@@ -8,7 +8,8 @@ fun GeocodingResultDto.toDomain(): City = City(
     name = name,
     country = country ?: "",
     latitude = latitude,
-    longitude = longitude
+    longitude = longitude,
+    region = listOfNotNull(admin3, admin2, admin1).distinct().take(2).joinToString(", ").ifBlank { null }
 )
 
 fun ForecastResponseDto.toDomain(): WeatherForecast = WeatherForecast(

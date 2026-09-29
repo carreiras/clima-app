@@ -33,7 +33,8 @@ class DetailsViewModel @Inject constructor(
         name = URLDecoder.decode(checkNotNull<String>(savedStateHandle["name"]), "UTF-8"),
         country = URLDecoder.decode(checkNotNull<String>(savedStateHandle["country"]), "UTF-8"),
         latitude = checkNotNull<Float>(savedStateHandle["lat"]).toDouble(),
-        longitude = checkNotNull<Float>(savedStateHandle["lon"]).toDouble()
+        longitude = checkNotNull<Float>(savedStateHandle["lon"]).toDouble(),
+        region = URLDecoder.decode(checkNotNull<String>(savedStateHandle["region"]), "UTF-8").ifBlank { null }
     )
 
     private val _uiState = MutableStateFlow<DetailsUiState>(DetailsUiState.Loading)

@@ -47,7 +47,10 @@ fun FavoritesScreen(
                     headlineContent = {
                         Text(text = city.name, style = MaterialTheme.typography.titleMedium)
                     },
-                    supportingContent = { Text(text = city.country) },
+                    supportingContent = {
+                        val subtitle = city.region?.let { "$it, ${city.country}" } ?: city.country
+                        Text(text = subtitle)
+                    },
                     leadingContent = {
                         Icon(
                             Icons.Filled.Favorite,
