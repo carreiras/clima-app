@@ -23,6 +23,7 @@ Compose, Coroutines/Flow, WorkManager.
 10. [Notificações locais](docs/aula-10-notificacoes.md)
 11. [Tela de configurações (intervalo e limiar)](docs/aula-11-configuracoes.md)
 12. [Menu, tipografia e tema visual](docs/aula-12-redesign-visual.md)
+13. [Desambiguação de resultados de busca por região](docs/aula-13-desambiguacao-busca.md)
 
 ## Documentação de apoio
 
